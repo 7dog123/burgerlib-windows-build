@@ -1,8 +1,3 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-
 name: MSBuild
 
 on:
@@ -12,12 +7,6 @@ on:
     branches: [ "master" ]
 
 env:
-  # Path to the solution file relative to the root of the project.
-  SOLUTION_FILE_PATH: projects
-
-  # Configuration type to build.
-  # You can convert this to a build matrix if you need coverage of multiple configuration types.
-  # https://docs.github.com/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
   BUILD_CONFIGURATION: Release
 
 permissions:
@@ -26,6 +15,26 @@ permissions:
 jobs:
   build:
     runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - ProjectFile: burgerv10win.sln
+          - ProjectFile: burgerv10x36.sln
+          - ProjectFile: burgerv12win.sln
+          - ProjectFile: burgerv13win.sln
+          - ProjectFile: burgerv15ps3.sln
+          - ProjectFile: burgerv15shi.sln
+          - ProjectFile: burgerv15vit.sln
+          - ProjectFile: burgerv15win.sln
+          - ProjectFile: burgerv19win10.sln
+          - ProjectFile: burgerv22and.sln
+          - ProjectFile: burgerv22sta.sln
+          - ProjectFile: burgerv22win10.sln
+          - ProjectFile: burgervc7w32.sln
+          - ProjectFile: burgervc8win.sln
+          - ProjectFile: burgervc9win.sln
 
     steps:
     - uses: actions/checkout@v4
@@ -38,6 +47,6 @@ jobs:
 
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
-      # Add additional options to the MSBuild command line here (like platform or verbosity level).
-      # See https://docs.microsoft.com/visualstudio/msbuild/msbuild-command-line-reference
-      run: msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}}
+      run: |
+        msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} \
+        ${{env.SOLUTION_FILE_PATH}} ProjectFile=${{matrix.ProjectFile}}
