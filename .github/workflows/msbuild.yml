@@ -20,21 +20,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - ProjectFile: burgerv10win.sln
-          - ProjectFile: burgerv10x36.sln
-          - ProjectFile: burgerv12win.sln
-          - ProjectFile: burgerv13win.sln
-          - ProjectFile: burgerv15ps3.sln
-          - ProjectFile: burgerv15shi.sln
-          - ProjectFile: burgerv15vit.sln
-          - ProjectFile: burgerv15win.sln
-          - ProjectFile: burgerv19win10.sln
-          - ProjectFile: burgerv22and.sln
-          - ProjectFile: burgerv22sta.sln
-          - ProjectFile: burgerv22win10.sln
-          - ProjectFile: burgervc7w32.sln
-          - ProjectFile: burgervc8win.sln
-          - ProjectFile: burgervc9win.sln
+          - ProjectFile: projects/burgerv10win.sln
+          - ProjectFile: projects/burgerv10x36.sln
+          - ProjectFile: projects/burgerv12win.sln
+          - ProjectFile: projects/burgerv13win.sln
+          - ProjectFile: projects/burgerv15ps3.sln
+          - ProjectFile: projects/burgerv15shi.sln
+          - ProjectFile: projects/burgerv15vit.sln
+          - ProjectFile: projects/burgerv15win.sln
+          - ProjectFile: projects/burgerv19win10.sln
+          - ProjectFile: projects/burgerv22and.sln
+          - ProjectFile: projects/burgerv22sta.sln
+          - ProjectFile: projects/burgerv22win10.sln
+          - ProjectFile: projects/burgervc7w32.sln
+          - ProjectFile: projects/burgervc8win.sln
+          - ProjectFile: projects/burgervc9win.sln
 
     steps:
     - uses: actions/checkout@v4
@@ -48,4 +48,4 @@ jobs:
     - name: Build
       working-directory: ${{env.GITHUB_WORKSPACE}}
       run: |
-        msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{env.SOLUTION_FILE_PATH}} /p:ProjectFile=${{matrix.ProjectFile}}
+        msbuild /m /p:Configuration=${{env.BUILD_CONFIGURATION}} ${{matrix.ProjectFile}}
